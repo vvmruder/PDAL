@@ -31,7 +31,11 @@
 * OF SUCH DAMAGE.
 ****************************************************************************/
 
+// We don't use m_measureDim
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-private-field"
 #include "OGRWriter.hpp"
+#pragma GCC diagnostic pop
 
 #include <sstream>
 
@@ -146,7 +150,6 @@ bool OGRWriter::processOne(PointRef& point)
     double x = point.getFieldAs<double>(Dimension::Id::X);
     double y = point.getFieldAs<double>(Dimension::Id::Y);
     double z = point.getFieldAs<double>(Dimension::Id::Z);
-    double m = point.getFieldAs<double>(m_measureDim);
 
     OGRPoint pt(x, y, z);
     m_curCount++;

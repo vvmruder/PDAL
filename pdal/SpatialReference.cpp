@@ -246,7 +246,7 @@ std::string SpatialReference::getHorizontalUnits() const
     // The returned value remains internal to the OGRSpatialReference
     // and should not be freed, or modified. It may be invalidated on
     // the next OGRSpatialReference call.
-    double u = poSRS->GetLinearUnits(&units);
+    poSRS->GetLinearUnits(&units);
     std::string tmp(units);
     Utils::trim(tmp);
     return tmp;
