@@ -276,12 +276,18 @@ target_link_libraries(${PDAL_BASE_LIB_NAME}
         ${ZSTD_LIBRARIES}
         ${WINSOCK_LIBRARY}
         ${PDAL_REEXPORT}
-        ${PDAL_UTIL_LIB_NAME}
         ${PDAL_ARBITER_LIB_NAME}
         ${PDAL_KAZHDAN_LIB_NAME}
         ${PDAL_JSONCPP_LIB_NAME}
     PRIVATE
         ${PDAL_LIBDIR}
+#
+# We link pdal_util as public because people may reference symbols in that
+# library directly, in which case it needs to be linked, rather than just
+# show up as a secondary dependency.
+#
+    PUBLIC
+        ${PDAL_UTIL_LIB_NAME}
 )
 target_compile_definitions(${PDAL_BASE_LIB_NAME}
     PRIVATE
@@ -329,13 +335,13 @@ if (NOT PDAL_HAVE_LAZPERF)
     set(LAZPERF_EXCLUDES PATTERN pdal/compression/LazPerf* EXCLUDE)
 endif()
 
-install(TARGETS ${PDAL_LIB_NAME}
+install(TARGETS ${PDAL_BASE_LIB_NAME}
     EXPORT PDALTargets
     LIBRARY DESTINATION ${PDAL_LIB_INSTALL_DIR}
 )
-#install(TARGETS ${PDAL_UTIL_LIB_NAME}
-#    LIBRARY DESTINATION ${PDAL_LIB_INSTALL_DIR}
-#)
+install(EXPORT PDALTargets
+    NAMESPACE Pdal::
+    DESTINATION ${PDAL_LIB_INSTALL_DIR}/cmake/PDAL)
 
 install(DIRECTORY ${PDAL_INCLUDE_DIR}/pdal
     DESTINATION include
@@ -376,18 +382,6 @@ include (${PDAL_CMAKE_DIR}/cpack.cmake)
 
 add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
-#        ${PDAL_BASE_LIB_NAME} ${PDAL_UTIL_LIB_NAME}
-export(
-    TARGETS
-        ${PDAL_LIB_NAME}
-    FILE
-        "${PDAL_BINARY_DIR}/PDALTargets.cmake")
-
-install(
-    EXPORT
-        PDALTargets
-    DESTINATION
-        "${PDAL_LIB_INSTALL_DIR}/cmake/PDAL")
 include(${PDAL_CMAKE_DIR}/config.cmake)
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
 
