@@ -276,10 +276,10 @@ target_link_libraries(${PDAL_BASE_LIB_NAME}
         ${ZSTD_LIBRARIES}
         ${WINSOCK_LIBRARY}
         ${PDAL_REEXPORT}
+        ${PDAL_UTIL_LIB_NAME}
         ${PDAL_ARBITER_LIB_NAME}
         ${PDAL_KAZHDAN_LIB_NAME}
         ${PDAL_JSONCPP_LIB_NAME}
-        ${PDAL_UTIL_LIB_NAME}
     PRIVATE
         ${PDAL_LIBDIR}
 )
