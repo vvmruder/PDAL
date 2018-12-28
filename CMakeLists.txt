@@ -279,15 +279,9 @@ target_link_libraries(${PDAL_BASE_LIB_NAME}
         ${PDAL_ARBITER_LIB_NAME}
         ${PDAL_KAZHDAN_LIB_NAME}
         ${PDAL_JSONCPP_LIB_NAME}
+        ${PDAL_UTIL_LIB_NAME}
     PRIVATE
         ${PDAL_LIBDIR}
-#
-# We link pdal_util as public because people may reference symbols in that
-# library directly, in which case it needs to be linked, rather than just
-# show up as a secondary dependency.
-#
-    PUBLIC
-        ${PDAL_UTIL_LIB_NAME}
 )
 target_compile_definitions(${PDAL_BASE_LIB_NAME}
     PRIVATE

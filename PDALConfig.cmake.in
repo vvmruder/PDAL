@@ -18,6 +18,6 @@ endforeach(_dir)
 include("${CMAKE_CURRENT_LIST_DIR}/PDALTargets.cmake")
 
 # On windows link in pdal_util as well
-set(PDAL_LIBRARIES Pdal::@PDAL_BASE_LIB_NAME@)
+set(PDAL_LIBRARIES Pdal::@PDAL_BASE_LIB_NAME@ Pdal::@PDAL_UTIL_LIB_NAME@)
 
 check_required_components(PDAL)
