@@ -329,6 +329,9 @@ if (NOT PDAL_HAVE_LAZPERF)
     set(LAZPERF_EXCLUDES PATTERN pdal/compression/LazPerf* EXCLUDE)
 endif()
 
+#
+# pdal_util is installed in its subdirectory.
+#
 install(TARGETS ${PDAL_BASE_LIB_NAME}
     EXPORT PDALTargets
     LIBRARY DESTINATION ${PDAL_LIB_INSTALL_DIR}
