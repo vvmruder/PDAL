@@ -92,6 +92,7 @@ endmacro(PDAL_ADD_EXECUTABLE)
 # ARGN :
 #    FILES the source files for the plugin
 #    LINK_WITH link plugin with libraries
+#    INCLUDES header directories
 #
 # The "generate_dimension_hpp" ensures that Dimension.hpp is built before
 #  attempting to build anything else in the "library".
@@ -101,7 +102,7 @@ endmacro(PDAL_ADD_EXECUTABLE)
 macro(PDAL_ADD_PLUGIN _name _type _shortname)
     set(options)
     set(oneValueArgs)
-    set(multiValueArgs FILES LINK_WITH)
+    set(multiValueArgs FILES LINK_WITH INCLUDES)
     cmake_parse_arguments(PDAL_ADD_PLUGIN "${options}" "${oneValueArgs}"
         "${multiValueArgs}" ${ARGN})
     if(WIN32)
@@ -118,7 +119,9 @@ macro(PDAL_ADD_PLUGIN _name _type _shortname)
     pdal_target_compile_settings(${${_name}})
     target_include_directories(${${_name}} PRIVATE
         ${PROJECT_BINARY_DIR}/include
-        ${PDAL_INCLUDE_DIR})
+        ${PDAL_INCLUDE_DIR}
+        ${PDAL_ADD_PLUGIN_INCLUDES}
+    )
     target_link_libraries(${${_name}}
         PRIVATE
             ${PDAL_BASE_LIB_NAME}
@@ -149,10 +152,12 @@ endmacro(PDAL_ADD_PLUGIN)
 # ARGN :
 #    FILES the source files for the test
 #    LINK_WITH link test executable with libraries
+#    INCLUDES header file directories
+#
 macro(PDAL_ADD_TEST _name)
     set(options)
     set(oneValueArgs)
-    set(multiValueArgs FILES LINK_WITH)
+    set(multiValueArgs FILES LINK_WITH INCLUDES)
     cmake_parse_arguments(PDAL_ADD_TEST "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     if (WIN32)
         list(APPEND ${PDAL_ADD_TEST_FILES} ${PDAL_TARGET_OBJECTS})
@@ -164,6 +169,7 @@ macro(PDAL_ADD_TEST _name)
     target_include_directories(${_name} PRIVATE
         ${ROOT_DIR}
         ${PDAL_INCLUDE_DIR}
+        ${PDAL_ADD_TEST_INCLUDES}
         ${PROJECT_SOURCE_DIR}/test/unit
         ${PROJECT_BINARY_DIR}/test/unit
         ${PROJECT_BINARY_DIR}/include)

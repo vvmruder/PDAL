@@ -47,7 +47,7 @@ writer from filenames, and able to be specified as a set of sequential steps:
       "pipeline":[
           "input.las",
           {
-              "type":"crop",
+              "type":"filters.crop",
               "bounds":"([0,100],[0,100])"
           },
           "output.bpf"
@@ -362,7 +362,8 @@ then creates the DTM using the :ref:`writers.gdal`.
               "type":"writers.gdal",
               "filename":"autzen-surface.tif",
               "output_type":"min",
-              "output_format":"tif",
+              "gdaldriver":"GTiff",
+              "window_size":3,
               "resolution":1.0
           }
       ]
