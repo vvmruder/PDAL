@@ -183,6 +183,47 @@ inline Type type(const std::string& baseType, size_t size)
     return static_cast<Type>((size_t)(base) | size);
 }
 
+template<typename T>
+inline constexpr Type type()
+{ return Type::None; }
+
+template<>
+inline constexpr Type type<float>()
+{ return Type::Float; }
+
+template<>
+inline constexpr Type type<uint64_t>()
+{ return Type::Unsigned64; }
+
+template<>
+inline constexpr Type type<uint32_t>()
+{ return Type::Unsigned32; }
+
+template<>
+inline constexpr Type type<uint16_t>()
+{ return Type::Unsigned16; }
+
+template<>
+inline constexpr Type type<uint8_t>()
+{ return Type::Unsigned8; }
+
+
+template<>
+inline constexpr Type type<int64_t>()
+{ return Type::Signed64; }
+
+template<>
+inline constexpr Type type<int32_t>()
+{ return Type::Signed32; }
+
+template<>
+inline constexpr Type type<int16_t>()
+{ return Type::Signed16; }
+
+template<>
+inline constexpr Type type<int8_t>()
+{ return Type::Signed8; }
+
 /// Extract a dimension name of a string.  Dimension names start with an alpha
 /// and continue with numbers or underscores.
 /// \param s  String from which to extract dimension name.

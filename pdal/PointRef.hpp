@@ -75,6 +75,13 @@ public:
         Everything e;
         Dimension::Type type = m_layout.dimDetail(dim)->type();
 
+        if (Dimension::type<T>() == type)
+        {
+            T t;
+            m_container.getFieldInternal(dim, m_idx, &t);
+            return t;
+        }
+
         m_container.getFieldInternal(dim, m_idx, &e);
         switch (type)
         {
@@ -135,6 +142,10 @@ public:
     void setField(Dimension::Id dim, T val)
     {
         Dimension::Type type = m_layout.dimDetail(dim)->type();
+
+        if (Dimension::type<T>() == type)
+            m_container.setFieldInternal(dim, m_idx, &val);
+
         Everything e;
         bool success = false;
 

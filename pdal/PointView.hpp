@@ -525,6 +525,9 @@ void PointView::setField(Dimension::Id dim, PointId idx, T val)
 {
     const Dimension::Detail *dd = layout()->dimDetail(dim);
 
+    if (Dimension::type<T>() == dd->type())
+        setFieldInternal(dim, idx, &val);
+
     bool ok = true;
     switch (dd->type())
     {
