@@ -442,6 +442,10 @@ inline T PointView::getFieldAs(Dimension::Id dim,
     T retval;
     bool ok = false;
     const Dimension::Detail *dd = layout()->dimDetail(dim);
+
+    if (Dimension::type<T>() == dd->type())
+        return getFieldInternal<T>(dim, pointIndex);
+
     Everything e;
 
     switch (dd->type())
@@ -526,7 +530,10 @@ void PointView::setField(Dimension::Id dim, PointId idx, T val)
     const Dimension::Detail *dd = layout()->dimDetail(dim);
 
     if (Dimension::type<T>() == dd->type())
+    {
         setFieldInternal(dim, idx, &val);
+        return;
+    }
 
     bool ok = true;
     switch (dd->type())

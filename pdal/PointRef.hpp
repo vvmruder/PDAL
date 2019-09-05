@@ -144,7 +144,10 @@ public:
         Dimension::Type type = m_layout.dimDetail(dim)->type();
 
         if (Dimension::type<T>() == type)
+        {
             m_container.setFieldInternal(dim, m_idx, &val);
+            return;
+        }
 
         Everything e;
         bool success = false;
